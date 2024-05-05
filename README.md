@@ -27,8 +27,22 @@ NotifyController.addNotification(player, {
 
 -   `icon`: The emoji to display in the notification.
 -   `title`: The title of the notification.
+-   `subtitle`: The subtitle of the notification.
 -   `message`: The notification message.
 -   `duration`: The duration in milliseconds for how long the notification should be displayed.
+-   `oggFile?`: Sound (ogg) of the notification from /sounds folder.
+
+# Interface
+```javascript
+export interface Notification {
+    icon: string;
+    title: string;
+    subTitle: string;
+    message: string;
+    duration?: number;
+    oggFile?: string;
+}
+```
 
 ## License
 
