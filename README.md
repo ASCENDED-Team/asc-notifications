@@ -1,6 +1,6 @@
-# Athena Notification Plugin
+# Rebar Notification Plugin
 
-Athena Notification Plugin is a plugin for the Athena framework that allows you to display notifications in your application.
+Rebar Notification Plugin is a plugin for the Rebar Framework that allows you to display custom notifications in your application with a que.
 
 ## Usage
 
@@ -11,10 +11,9 @@ You can add a notification by calling the `addNotification` method provided by t
 # Serverside
 
 ```javascript
-const Notify = await Athena.systems.plugins.useAPI('notification-api');
-Notify.addNotification(player, {
+NotifyController.addNotification(player, {
     icon: '🤑',
-    title: 'Open Source Shopg',
+    title: 'Some Notification...',
     message: `You've successfully bought x${items} for ${totalPrice}$!`,
     duration: 5000,
 });
@@ -37,17 +36,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Getting Started
 
-To get started with the Athena Notification Plugin, you can clone it from the source code.
+To get started with the Rebar Notification Plugin, you can clone it from the source code.
 
 1. Clone the repository:
 
 ```shell
-git clone https://github.com/Booster1212/plugin-notifications.git
+git clone https://github.com/Booster1212/rebar-notifications
 ```
 
 ## Acknowledgments
 
--   This project was inspired by the need for a simple and customizable notification system in Athena applications.
+-   This project was inspired by the need for a simple and customizable notification system in Rebar applications.
 
 ## Authors
 
