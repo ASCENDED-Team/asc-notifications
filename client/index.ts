@@ -3,7 +3,7 @@ import { NotifyController } from './src/controller.js';
 import { useWebview } from '@Client/webview/index.js';
 
 
-useWebview().show('Notify', 'page');
+useWebview().show('Notify', 'persistent');
 
 alt.on('keydown', (key: number) => {
     if(key === 'H'.charCodeAt(0)) {
