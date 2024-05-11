@@ -24,6 +24,8 @@ defineProps({
     secondsAgo: Number,
 });
 
+let debugMode = false; // Set to true for debugging
+
 interface VueNotification extends Notification {
     id?: number;
     progress?: number;
@@ -48,8 +50,6 @@ const addNotification = (notification: VueNotification) => {
     if (!timer) {
         timer = setInterval(updateProgress, 10);
     }
-
-    console.log(JSON.stringify(notification, undefined, 4));
 };
 
 const removeNotification = (index: number) => {
@@ -83,7 +83,6 @@ const updateProgress = () => {
     }
 };
 
-let debugMode = false; // Set to true for debugging
 
 const addDebugNotification = () => {
     if (debugMode) {
@@ -98,6 +97,7 @@ const addDebugNotification = () => {
         addNotification(debugNotification);
     }
 };
+
 const init = () => {
     events.on(NotifyEvents.CREATE_NOTIFICATION, (notification: VueNotification) => {
 
@@ -107,6 +107,7 @@ const init = () => {
     addNotification(notification);
 });
 }
+
 onMounted(() => {
     addDebugNotification();
     init();

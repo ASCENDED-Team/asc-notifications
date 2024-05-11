@@ -1,16 +1,17 @@
 import * as alt from 'alt-server';
 import { useWebview } from '@Server/player/webview.js';
 import { NotifyEvents } from '../../shared/events.js';
-import { NotificationConfig } from '../../shared/config.js';
+import { NotificationConfig, NotificationTypes } from '../../shared/config.js';
 import { Notification } from '../../shared/interface.js';
 import { useRebar } from '@Server/index.js';
+
 const Rebar = useRebar();
 
 export class NotifyController {
     static addNotification(player: alt.Player, notification: Notification) {
         const view = useWebview(player);
         if (!notification.duration) {
-            notification.duration = 5000;
+            notification.duration = NotificationConfig.notificationDuration;
         }
 
         if (notification.oggFile) {
@@ -20,9 +21,19 @@ export class NotifyController {
         view.emit(NotifyEvents.CREATE_NOTIFICATION, notification);
     }
 
-    static debug(msg: string) {
+    static debug(player: alt.Player, message: string) {
+        const view = useWebview(player);
+
         if (NotificationConfig.debugMode) {
-            console.log(`[Notification-DEBUG]: ${msg}`);
+            const notification: Notification = {
+                title: 'Rebar Notifications',
+                subTitle: '<Debug-Notification>',
+                icon: NotificationTypes.warning,
+                message: message,
+                oggFile: 'systemfault',
+                duration: NotificationConfig.notificationDuration
+            }
+            view.emit(NotifyEvents.CREATE_NOTIFICATION, notification);
         }
     }
 }

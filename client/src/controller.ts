@@ -1,6 +1,7 @@
 import { useWebview } from '@Client/webview/index.js';
 import { NotifyEvents } from '../../shared/events.js';
 import { Notification } from '../../shared/interface.js';
+import { NotificationConfig } from 'plugins/rebar-notifications/shared/config.js';
 
 export class NotifyController {
     static addNotification(notification: Notification) {
@@ -10,6 +11,8 @@ export class NotifyController {
 
         useWebview().emit(NotifyEvents.CREATE_NOTIFICATION, notification);
 
-        console.log(`Current Notification: ${JSON.stringify(notification, undefined, 4)}`)
+        if(NotificationConfig.debugMode) {
+            console.log(`Current Notification: ${JSON.stringify(notification, undefined, 4)}`)
+        }
     }
 }
