@@ -3,6 +3,7 @@ export const NotificationConfig = {
     enableSounds: true,
     enableRebarSelector: true,
     notificationDuration: 10000,
+    darkMode: false,
 };
 
 export const NotificationTypes = {
