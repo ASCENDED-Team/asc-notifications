@@ -1,6 +1,8 @@
-# Rebar Notification Plugin
+# Ascended Notification Plugin
 
-Rebar Notification Plugin is a plugin for the Rebar Framework that allows you to display custom notifications in your application with a que.
+![Notification_Kopie](https://github.com/Booster1212/rebar-notifications/assets/82890183/6e9aaa18-903f-4c27-bee1-50109a4809b1)
+
+Ascended Notification Plugin is a plugin for the Rebar Framework that allows you to display custom notifications in your application with a que.
 
 ## Usage
 
@@ -11,7 +13,7 @@ You can add a notification by calling the `addNotification` method provided by t
 # Serverside
 
 ```javascript
-NotifyController.addNotification(player, {
+addNotification(player, {
     icon: '🤑',
     title: 'Some Notification...',
     message: `You've successfully bought x${items} for ${totalPrice}$!`,
@@ -19,9 +21,24 @@ NotifyController.addNotification(player, {
 });
 ```
 
-# Clientside
+# Usage with PluginAPI:
 
--   Will Follow
+```javascript
+import * as alt from 'alt-server';
+import { useRebar } from '@Server/index.js';
+
+const Rebar = useRebar();
+const messenger = Rebar.messenger.useMessenger();
+const NotificationAPI = await Rebar.useApi().getAsync('use-notification-api');
+
+NotificationAPI.create(player, {
+    title: 'Success',
+    subTitle: 'Spawned vehicle',
+    message: `Successfully spawned Fulltuned Vehicle [Model: ${model}] at your current position.`,
+    icon: '✅',
+    duration: 15000,
+});
+```
 
 # Params
 
@@ -50,7 +67,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Getting Started
 
-To get started with the Rebar Notification Plugin, you can clone it from the source code.
+To get started with the Ascended Notification Plugin, you can clone it from the source code.
 
 1. Clone the repository:
 
