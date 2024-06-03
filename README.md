@@ -21,7 +21,7 @@ addNotification(player, {
 });
 ```
 
-# Usage with PluginAPI:
+# Usage with Rebar PluginAPI:
 
 ```javascript
 import * as alt from 'alt-server';
@@ -49,18 +49,6 @@ NotificationAPI.create(player, {
 -   `duration`: The duration in milliseconds for how long the notification should be displayed.
 -   `oggFile?`: Sound (ogg) of the notification from /sounds folder.
 
-# Interface
-```javascript
-export interface Notification {
-    icon: string;
-    title: string;
-    subTitle: string;
-    message: string;
-    duration?: number;
-    oggFile?: string;
-}
-```
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -72,7 +60,7 @@ To get started with the Ascended Notification Plugin, you can clone it from the 
 1. Clone the repository:
 
 ```shell
-git clone https://github.com/Booster1212/rebar-notifications
+git clone https://github.com/ASCENDED-Team/asc-notifications
 ```
 
 ## Acknowledgments
