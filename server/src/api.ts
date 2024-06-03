@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { useApi } from '@Server/api/index.js';
 
-import { Notification } from 'plugins/rebar-notifications/shared/interface.js';
+import { Notification } from '../../shared/interface.js';
 import { addNotification } from './controller.js';
 
 function useNotificationAPI() {
