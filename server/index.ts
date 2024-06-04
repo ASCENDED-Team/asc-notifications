@@ -1,14 +1,16 @@
 import * as alt from 'alt-server';
 
 import { addNotification } from './src/controller.js';
-import { useApi } from '@Server/api/index.js';
 import { NotificationConfig, NotificationTypes } from '../shared/config.js';
+
+import { useApi } from '@Server/api/index.js';
 import { useRebar } from '@Server/index.js';
+
+
+import './src/api.js';
 
 const api = useApi();
 const Rebar = useRebar();
-
-import './src/api.js';
 
 async function init() {
     await alt.Utils.waitFor(() => api.isReady('character-creator-api'), 30000);

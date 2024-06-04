@@ -1,7 +1,7 @@
 import { useWebview } from '@Client/webview/index.js';
 import { NotifyEvents } from '../../shared/events.js';
 import { Notification } from '../../shared/interface.js';
-import { NotificationConfig } from 'plugins/rebar-notifications/shared/config.js';
+import { NotificationConfig } from '../../shared/config.js';
 
 export class NotifyController {
     static addNotification(notification: Notification) {

@@ -16,8 +16,8 @@ function useNotificationAPI() {
 
 declare global {
     export interface ServerPlugin {
-        ['use-notification-api']: ReturnType<typeof useNotificationAPI>;
+        ['ascended-notification-api']: ReturnType<typeof useNotificationAPI>;
     }
 }
 
-useApi().register('use-notification-api', useNotificationAPI());
+useApi().register('ascended-notification-api', useNotificationAPI());
