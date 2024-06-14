@@ -3,14 +3,20 @@ import { useApi } from '@Server/api/index.js';
 
 import { Notification } from '../../shared/interface.js';
 import { addNotification } from './controller.js';
+import { NotificationTypes } from '@Plugins/asc-notifications/shared/config.js';
 
 function useNotificationAPI() {
     function create(player: alt.Player, notification: Notification) {
         addNotification(player, notification);
     }
 
+    function type() {
+        return NotificationTypes;
+    }
+
     return {
         create,
+        type
     }
 }
 
