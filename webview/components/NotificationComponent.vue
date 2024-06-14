@@ -32,7 +32,7 @@
                     {{ notificationProp.icon }} {{ notificationProp.title }}
                 </span>
             </div>
-            <span class="text-gray-500" v-if="secondsAgo >= 10">{{ secondsAgo }}s</span>
+            <span class="text-gray-500" v-if="secondsAgo >= 2">{{ secondsAgo }}s</span>
             <span class="text-gray-500" v-else>now</span>
         </div>
         <div class="mt-2">
