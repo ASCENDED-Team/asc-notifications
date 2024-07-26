@@ -40,7 +40,7 @@ NotificationAPI.create(player, {
 });
 ```
 
-## Setting the position of the Notification via
+## Setting the position of the Notification
 You have to modify the postion in the shared/config.ts file
 
 ```javascript
