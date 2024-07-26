@@ -40,6 +40,20 @@ NotificationAPI.create(player, {
 });
 ```
 
+## Setting the position of the Notification via
+You have to modify the postion in the shared/config.ts file
+
+```javascript
+export const NotificationConfig = {
+    debugMode: true,
+    enableSounds: true,
+    enableRebarSelector: true,
+    notificationDuration: 10000,
+    darkMode: false,
+    notificationPosition: 'top-left', // Available: top-right | top-left | bottom-right | bottom-left
+};
+```
+
 # Params
 
 -   `icon`: The emoji to display in the notification.
