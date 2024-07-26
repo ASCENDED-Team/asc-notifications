@@ -4,6 +4,7 @@ export const NotificationConfig = {
     enableRebarSelector: true,
     notificationDuration: 10000,
     darkMode: false,
+    notificationPosition: 'top-left',
 };
 
 export const NotificationTypes = {
