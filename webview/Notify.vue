@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bottom-12 right-4 z-50 space-x-4">
+    <div :class="notificationPositionClass">
         <transition-group name="notification-slide" tag="div">
             <div v-for="(notification, index) in reversedNotifications" :key="notification.id">
                 <NotificationComponent :notification-prop="notification" :secondsAgo="notification.elapsedSeconds" />
@@ -15,6 +15,7 @@ import { NotifyEvents } from '../shared/events.js';
 import { useEvents } from '../../../../webview/composables/useEvents';
 import NotificationComponent from './components/NotificationComponent.vue';
 import { useAudio } from '../../../../webview/composables/useAudio';
+import { NotificationConfig } from '../shared/config.js';
 
 const audio = useAudio();
 const events = useEvents();
@@ -38,6 +39,16 @@ let timer: NodeJS.Timeout | null = null;
 
 const reversedNotifications = computed(() => {
     return notifications.value.slice().reverse();
+});
+
+const notificationPositionClass = computed(() => {
+    const positions: { [key: string]: string } = {
+        'top-right': 'fixed top-4 right-4',
+        'top-left': 'fixed top-4 left-4',
+        'bottom-right': 'fixed bottom-4 right-4',
+        'bottom-left': 'fixed bottom-4 left-4'
+    };
+    return `${positions[NotificationConfig.notificationPosition]} z-50 space-x-4`;
 });
 
 const addNotification = (notification: VueNotification) => {
