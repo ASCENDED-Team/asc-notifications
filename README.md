@@ -8,6 +8,8 @@ Ascended Notification Plugin is a plugin for the Rebar Framework that allows you
 
 ### Adding a Notification
 
+---
+
 You can add a notification using the Rebar Plugin API. Here's an example:
 
 ```typescript
@@ -34,6 +36,8 @@ NotificationAPI.general.sendAll({
     message: 'A new update is coming soon!',
 });
 ```
+
+---
 
 ### Setting the position of the Notification
 
@@ -69,13 +73,20 @@ To get started with the Ascended Notification Plugin, you can clone it from the 
 git clone https://github.com/ASCENDED-Team/asc-notifications
 ```
 
+---
+
 ### Acknowledgments
 
--   This project was inspired by the need for a simple and customizable notification system in Rebar applications.
-    **Authors**:
+This project was inspired by the need for a simple and customizable notification system in Rebar applications.
 
-*   Der Lord!
+---
 
-# Support
+**Authors**:
+
+-   Booster1212
+
+---
+
+**Support**:
 
 -   For support, bug reports, or feature requests, please create an issue here on GitHub.
