@@ -19,14 +19,13 @@ export function sendNotification(player: alt.Player, notification: Notification)
         duration: ASCNotifications.duration,
         oggFile: 'notification',
         ...notification,
-        icon: notification.icon.valueOf(),
+        icon: notification.icon,
     };
 
     if (notificationToSend.oggFile && ASCNotifications.sounds) {
         Rebar.player.useAudio(player).playSound(`/sounds/${notificationToSend.oggFile}.ogg`);
     }
 
-    console.log(`${JSON.stringify(notificationToSend)}`);
     view.emit(NotifyEvents.CREATE_NOTIFICATION, notificationToSend);
 }
 

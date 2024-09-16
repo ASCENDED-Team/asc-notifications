@@ -3,6 +3,6 @@ export const ASCNotifications = {
     sounds: true,
     enableRebarSelector: true,
     duration: 10000,
-    darkMode: true,
+    darkMode: false,
     position: 'top-left',
 };
