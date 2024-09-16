@@ -15,7 +15,7 @@ import { NotifyEvents } from '../shared/events.js';
 import { useEvents } from '../../../../webview/composables/useEvents';
 import NotificationComponent from './components/NotificationComponent.vue';
 import { useAudio } from '../../../../webview/composables/useAudio';
-import { NotificationConfig } from '../shared/config.js';
+import { ASCNotifications } from '../shared/config.js';
 
 const audio = useAudio();
 const events = useEvents();
@@ -46,9 +46,9 @@ const notificationPositionClass = computed(() => {
         'top-right': 'fixed top-4 right-4',
         'top-left': 'fixed top-4 left-4',
         'bottom-right': 'fixed bottom-4 right-4',
-        'bottom-left': 'fixed bottom-4 left-4'
+        'bottom-left': 'fixed bottom-4 left-4',
     };
-    return `${positions[NotificationConfig.notificationPosition]} z-50 space-x-4`;
+    return `${positions[ASCNotifications.position]} z-50 space-x-4`;
 });
 
 const addNotification = (notification: VueNotification) => {
@@ -94,12 +94,10 @@ const updateProgress = () => {
     }
 };
 
-
 const addDebugNotification = () => {
     if (debugMode) {
         const debugNotification: VueNotification = {
             title: 'Debug Notification',
-            subTitle: 'Success',
             icon: '🤣',
             message:
                 'This is a very long test debug notification to redesign the notification system! This is a very long test debug notification to redesign the notification system!',
@@ -111,13 +109,12 @@ const addDebugNotification = () => {
 
 const init = () => {
     events.on(NotifyEvents.CREATE_NOTIFICATION, (notification: VueNotification) => {
-
-    if(notification.oggFile) {
-        audio.play(`/sounds/${notification.oggFile}.ogg`)
-    }
-    addNotification(notification);
-});
-}
+        if (notification.oggFile) {
+            audio.play(`/sounds/${notification.oggFile}.ogg`);
+        }
+        addNotification(notification);
+    });
+};
 
 onMounted(() => {
     addDebugNotification();
@@ -128,7 +125,9 @@ onMounted(() => {
 <style scoped>
 .notification-slide-enter-active,
 .notification-slide-leave-active {
-    transition: opacity 1.5s, transform 1.5s;
+    transition:
+        opacity 1.5s,
+        transform 1.5s;
 }
 
 .notification-slide-enter,

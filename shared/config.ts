@@ -1,15 +1,8 @@
-export const NotificationConfig = {
-    debugMode: true,
-    enableSounds: true,
+export const ASCNotifications = {
+    debug: true,
+    sounds: true,
     enableRebarSelector: true,
-    notificationDuration: 10000,
-    darkMode: false,
-    notificationPosition: 'top-left',
+    duration: 10000,
+    darkMode: true,
+    position: 'top-left',
 };
-
-export const NotificationTypes = {
-    info: 'ℹ️', 
-    error: '❌',
-    success: '✅',
-    warning: '⚠️'
-}

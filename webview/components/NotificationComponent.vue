@@ -1,10 +1,11 @@
 <template>
     <div
-        class="iphone-notification max-w-200 mx-auto p-4 bg-black bg-opacity-80 shadow-lg rounded-lg w-full sm:w-[350px] mb-2"
-    v-if="NotificationConfig.darkMode">
-        <div class="flex items-center border-b border-gray-200 justify-between w-full">
-            <div class="iphone-title flex items-center w-full">
-                <span class="font-semibold text-lg text-white">
+        class="iphone-notification max-w-200 mx-auto mb-2 w-full rounded-lg bg-black bg-opacity-80 p-4 shadow-lg sm:w-[350px]"
+        v-if="ASCNotifications.darkMode"
+    >
+        <div class="flex w-full items-center justify-between border-b border-gray-200">
+            <div class="iphone-title flex w-full items-center">
+                <span class="text-lg font-semibold text-white">
                     {{ notificationProp.icon }} {{ notificationProp.title }}
                 </span>
             </div>
@@ -13,22 +14,23 @@
         </div>
         <div class="mt-2">
             <div
-                class="notification-progress h-2 sm:h-[2px] bg-gradient-to-r from-blue-200 to-blue-500 w-full"
+                class="notification-progress h-2 w-full bg-gradient-to-r from-blue-200 to-blue-500 sm:h-[2px]"
                 :style="{ animationDuration: notificationProp.duration + 'ms' }"
             ></div>
         </div>
         <div class="mt-2">
-            <p class="text-gray-200">{{ notificationProp.subTitle }}</p>
+            <p class="text-gray-200">{{ notificationProp.subtitle }}</p>
             <p class="text-gray-300">{{ notificationProp.message }}</p>
         </div>
     </div>
 
     <div
-        class="iphone-notification max-w-200 mx-auto p-4 bg-gray-100 bg-opacity-80 shadow-lg rounded-lg w-full sm:w-[350px] mb-2"
-    v-else>
-        <div class="flex items-center border-b border-gray-200 justify-between w-full">
-            <div class="iphone-title flex items-center w-full">
-                <span class="font-semibold text-lg text-black">
+        class="iphone-notification max-w-200 mx-auto mb-2 w-full rounded-lg bg-gray-100 bg-opacity-80 p-4 shadow-lg sm:w-[350px]"
+        v-else
+    >
+        <div class="flex w-full items-center justify-between border-b border-gray-200">
+            <div class="iphone-title flex w-full items-center">
+                <span class="text-lg font-semibold text-black">
                     {{ notificationProp.icon }} {{ notificationProp.title }}
                 </span>
             </div>
@@ -37,19 +39,19 @@
         </div>
         <div class="mt-2">
             <div
-                class="notification-progress h-2 sm:h-[2px] bg-gradient-to-r from-blue-200 to-blue-500 w-full"
+                class="notification-progress h-2 w-full bg-gradient-to-r from-blue-200 to-blue-500 sm:h-[2px]"
                 :style="{ animationDuration: notificationProp.duration + 'ms' }"
             ></div>
         </div>
         <div class="mt-2">
-            <p class="text-black">{{ notificationProp.subTitle }}</p>
+            <p class="text-black">{{ notificationProp.subtitle }}</p>
             <p class="text-gray-700">{{ notificationProp.message }}</p>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { NotificationConfig } from '../../shared/config';
+import { ASCNotifications } from '../../shared/config';
 
 const { notificationProp } = defineProps({
     notificationProp: Object,
