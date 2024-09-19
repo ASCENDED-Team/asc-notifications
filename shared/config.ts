@@ -1,7 +1,7 @@
 import { ASCNotification } from './interface.js';
 
 export const ASCNotifications: ASCNotification = {
-    debug: true,
+    debug: false,
     sounds: true,
     labelSound: false,
     enableRebarSelector: true,
