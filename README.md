@@ -59,10 +59,10 @@ const interaction = Rebar.controllers.useInteraction(
     'player',
 );
 interaction.onEnter((player) => {
-    NotificationAPI.general.createTextlabel(player, { key: 'E', label: t('openatm') });
+    NotificationAPI.textLabel.create(player, { key: 'E', label: t('openatm') });
 });
 interaction.onLeave((player) => {
-    NotificationAPI.general.removeTextlabel(player);
+    NotificationAPI.textLabel.remove(player);
 });
 ```
 

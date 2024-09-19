@@ -6,13 +6,6 @@
             </div>
         </transition-group>
     </div>
-    <div :class="labelPositionClass">
-        <Transition :name="transitionLabelName" tag="div">
-            <div v-if="labels">
-                <LabelComponent :label-prop="labels" />
-            </div>
-        </Transition>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -23,7 +16,6 @@ import { useEvents } from '../../../../webview/composables/useEvents';
 import NotificationComponent from './components/NotificationComponent.vue';
 import { useAudio } from '../../../../webview/composables/useAudio';
 import { ASCNotifications } from '../shared/config.js';
-import LabelComponent from './components/LabelComponent.vue';
 
 const audio = useAudio();
 const events = useEvents();
@@ -31,7 +23,6 @@ const events = useEvents();
 defineProps({
     notificationProp: Object,
     secondsAgo: Number,
-    labelProp: Object,
 });
 
 let debugMode = false; // Set to true for debugging
@@ -193,19 +184,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.notification-slide-enter-active,
-.notification-slide-leave-active {
-    transition:
-        opacity 1.5s,
-        transform 1.5s;
-}
-
-.notification-slide-enter,
-.notification-slide-leave-to {
-    opacity: 0;
-    transform: translateX(100%);
-}
-
 /* Left to Right Transition */
 .label-slide-left-enter-active,
 .label-slide-left-leave-active {
