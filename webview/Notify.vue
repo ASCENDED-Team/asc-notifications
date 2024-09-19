@@ -55,15 +55,6 @@ const notificationPositionClass = computed(() => {
     return `${positions[ASCNotifications.position]} z-50 space-x-4`;
 });
 
-const transitionLabelName = computed(() => {
-    if (ASCNotifications.textlabelPosition.includes('left')) {
-        return 'label-slide-left';
-    } else if (ASCNotifications.textlabelPosition.includes('right')) {
-        return 'label-slide-right';
-    }
-    return '';
-});
-
 const transitionNotificationName = computed(() => {
     if (ASCNotifications.position.includes('left')) {
         return 'label-slide-left';
@@ -71,19 +62,6 @@ const transitionNotificationName = computed(() => {
         return 'label-slide-right';
     }
     return '';
-});
-
-const labelPositionClass = computed(() => {
-    const positions: { [key: string]: string } = {
-        'top-right': 'fixed top-4 right-4',
-        'bottom-right': 'fixed bottom-4 right-4',
-        'right-center': 'fixed top-1/2 right-4 transform -translate-y-1/2',
-        'top-left': 'fixed top-4 left-4',
-        'bottom-left': 'fixed bottom-4 left-4',
-        'left-center': 'fixed top-1/2 left-4 transform -translate-y-1/2',
-    };
-
-    return `${positions[ASCNotifications.textlabelPosition]} z-50 space-x-4`;
 });
 
 const addNotification = (notification: VueNotification) => {
@@ -96,14 +74,6 @@ const addNotification = (notification: VueNotification) => {
     if (!timer) {
         timer = setInterval(updateProgress, 10);
     }
-};
-
-const addTextLabel = (label: Label) => {
-    labels.value = { label: label.label, key: label.key };
-};
-
-const removeTextLabel = () => {
-    labels.value = null;
 };
 
 const removeNotification = (index: number) => {
@@ -138,7 +108,7 @@ const updateProgress = () => {
 };
 
 const addDebugNotification = () => {
-    if (!debugMode) {
+    if (debugMode) {
         const debugNotification: VueNotification = {
             title: 'Debug Notification',
             icon: '🤣',
@@ -146,16 +116,8 @@ const addDebugNotification = () => {
                 'This is a very long test debug notification to redesign the notification system! This is a very long test debug notification to redesign the notification system!',
             duration: 60000 * 60, // 1 hour in milliseconds
         };
-        const debugLabel: Label = {
-            key: 'E',
-            label: 'Debug Notification',
-        };
-        addTextLabel(debugLabel);
-        addNotification(debugNotification);
 
-        setTimeout(() => {
-            removeTextLabel();
-        }, 5000);
+        addNotification(debugNotification);
     }
 };
 
@@ -165,15 +127,6 @@ const init = () => {
             audio.play(`/sounds/${notification.oggFile}.ogg`);
         }
         addNotification(notification);
-    });
-    events.on(NotifyEvents.CREATE_LABEL, (label: Label) => {
-        // if (notification.oggFile) {
-        //     audio.play(`/sounds/${notification.oggFile}.ogg`);
-        // }
-        addTextLabel(label);
-    });
-    events.on(NotifyEvents.REMOVE_TEXTLABEL, () => {
-        removeTextLabel();
     });
 };
 
