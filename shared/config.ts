@@ -1,8 +1,12 @@
-export const ASCNotifications = {
+import { ASCNotification } from './interface.js';
+
+export const ASCNotifications: ASCNotification = {
     debug: true,
     sounds: true,
+    labelSound: false,
     enableRebarSelector: true,
     duration: 10000,
-    darkMode: false,
+    darkMode: true,
     position: 'top-left',
+    textlabelPosition: 'right-center',
 };

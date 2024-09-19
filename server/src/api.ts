@@ -1,11 +1,13 @@
 import { useApi } from '@Server/api/index.js';
-import { sendNotification } from './controller.js';
+import { sendNotification, createTextlabel, removeTextlabel } from './controller.js';
 import { NotificationTypes } from '../../shared/interface.js';
 
 function useNotificationAPI() {
     const general = {
         send: sendNotification,
         sendAll: sendNotification,
+        createTextlabel: createTextlabel,
+        removeTextlabel: removeTextlabel,
         getTypes: () => {
             return NotificationTypes;
         },
