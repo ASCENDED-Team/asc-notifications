@@ -39,6 +39,35 @@ NotificationAPI.general.sendAll({
 
 ---
 
+### Adding a TextLabel
+
+---
+
+You can add a textlabel using the Rebar Plugin API. Here's an example:
+
+```typescript
+import * as alt from 'alt-server';
+import { useRebar } from '@Server/index.js';
+import { NotificationTypes } from 'your-plugin-path/shared/interface.js'; // Adjust path
+
+const Rebar = useRebar();
+const NotificationAPI = await Rebar.useApi().getAsync('ascended-notification-api');
+
+// Send textlabel to a specific player
+const interaction = Rebar.controllers.useInteraction(
+    new alt.ColshapeCylinder(position.x, position.y, position.z, 2, 10),
+    'player',
+);
+interaction.onEnter((player) => {
+    NotificationAPI.general.createTextlabel(player, { key: 'E', label: t('openatm') });
+});
+interaction.onLeave((player) => {
+    NotificationAPI.general.removeTextlabel(player);
+});
+```
+
+---
+
 ### Setting the position of the Notification
 
 You can modify the position in the shared/config.ts file:
@@ -46,7 +75,8 @@ You can modify the position in the shared/config.ts file:
 ```typescript
 export const ASCNotifications = {
     // ... other config options
-    position: 'top-left', // Available: top-right | top-left | bottom-right | bottom-left
+    position: 'top-left',
+    textlabelPosition: 'right-center',
 };
 ```
 
@@ -58,6 +88,11 @@ export const ASCNotifications = {
 -   **message**: The notification message.
     duration**: (Optional) The duration in milliseconds for how long the notification should be displayed (defaults to value in config).
     oggFile**: (Optional) Sound (ogg) of the notification from the /sounds folder (defaults to 'notification').
+
+### TextLabel Object Properties
+
+-   **label**: The message to be displayed
+-   **key**: The key used for the intraction.
 
 ### License
 

@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { useWebview } from '@Server/player/webview.js';
 import { NotifyEvents } from '../../shared/events.js';
-import { Notification, NotificationTypes } from '../../shared/interface.js';
+import { Label, Notification, NotificationTypes } from '../../shared/interface.js';
 import { useRebar } from '@Server/index.js';
 import { ASCNotifications } from '../../shared/config.js';
 
@@ -56,4 +56,29 @@ export function sendDebugNotification(player: alt.Player, message: string) {
         duration: 10000,
         oggFile: 'systemfault',
     });
+}
+
+/**
+ * Sends a text label to the player.
+ * @param player The player to send the text label to.
+ * @param label The notification object containing  title, key, etc.
+ */
+export function createTextlabel(player: alt.Player, label: Label) {
+    const view = useWebview(player);
+
+    const labelToSend: Label = {
+        oggFile: 'notification',
+        ...label,
+    };
+
+    if (labelToSend.oggFile && ASCNotifications.labelSound) {
+        Rebar.player.useAudio(player).playSound(`/sounds/${labelToSend.oggFile}.ogg`);
+    }
+
+    view.emit(NotifyEvents.CREATE_LABEL, labelToSend);
+}
+
+export function removeTextlabel(player: alt.Player) {
+    const view = useWebview(player);
+    view.emit(NotifyEvents.REMOVE_TEXTLABEL);
 }
