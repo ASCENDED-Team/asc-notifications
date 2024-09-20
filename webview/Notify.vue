@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { Notification, Label, LabelPositionsT } from '../shared/interface.js';
+import { Notification, Label } from '../shared/interface.js';
 import { NotifyEvents } from '../shared/events.js';
 import { useEvents } from '../../../../webview/composables/useEvents';
 import NotificationComponent from './components/NotificationComponent.vue';
@@ -108,7 +108,7 @@ const updateProgress = () => {
 };
 
 const addDebugNotification = () => {
-    if (debugMode) {
+    if (ASCNotifications.debug) {
         const debugNotification: VueNotification = {
             title: 'Debug Notification',
             icon: '🤣',
