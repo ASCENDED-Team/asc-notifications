@@ -8,7 +8,7 @@
                 >
                     <div class="iphone-title flex w-full items-center gap-x-2">
                         <span class="rounded-md bg-[#169399] px-2 text-lg font-semibold text-white">
-                            {{ labels.key }}
+                            {{ labels.keyToPress }}
                         </span>
                         <span
                             class="text-lg font-semibold"
@@ -37,6 +37,7 @@ const events = useEvents();
 let debugMode = false; // Set to true for debugging
 
 const labels = ref<Label>();
+const showLabel = ref(false);
 
 const transitionLabelName = computed(() => {
     if (ASCNotifications.textlabelPosition.includes('left')) {
@@ -61,7 +62,7 @@ const labelPositionClass = computed(() => {
 });
 
 const addTextLabel = (label: Label) => {
-    labels.value = { label: label.label, key: label.key };
+    labels.value = { label: label.label, keyToPress: label.keyToPress };
 };
 
 const removeTextLabel = () => {
@@ -71,7 +72,7 @@ const removeTextLabel = () => {
 const addDebugNotification = () => {
     if (debugMode) {
         const debugLabel: Label = {
-            key: 'E',
+            keyToPress: 'E',
             label: 'Debug Notification',
         };
         addTextLabel(debugLabel);
@@ -83,13 +84,19 @@ const addDebugNotification = () => {
 };
 
 const init = () => {
-    events.on(NotifyEvents.CREATE_LABEL, (label: Label) => {
+    if (!showLabel.value && labels.value === undefined) {
+        events.emitServer(NotifyEvents.toServer.SEND_LABEL_DATA_TO_SERVER);
+    }
+
+    events.on(NotifyEvents.toWebview.CREATE_LABEL, (label: Label) => {
         // if (notification.oggFile) {
         //     audio.play(`/sounds/${notification.oggFile}.ogg`);
         // }
+        showLabel.value = true;
         addTextLabel(label);
     });
-    events.on(NotifyEvents.REMOVE_TEXTLABEL, () => {
+
+    events.on(NotifyEvents.toWebview.REMOVE_TEXTLABEL, () => {
         removeTextLabel();
     });
 };

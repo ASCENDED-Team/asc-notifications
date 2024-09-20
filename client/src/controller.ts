@@ -7,13 +7,13 @@ export function addNotification(notification: Notification) {
         notification.duration = 5000;
     }
 
-    useWebview().emit(NotifyEvents.CREATE_NOTIFICATION, notification);
+    useWebview().emit(NotifyEvents.toWebview.CREATE_NOTIFICATION, notification);
 }
 
 export function createTextlabel(label: Label) {
-    useWebview().emit(NotifyEvents.CREATE_LABEL, label);
+    useWebview().emit(NotifyEvents.toWebview.CREATE_LABEL, label);
 }
 
 export function removeTextlabel() {
-    useWebview().emit(NotifyEvents.REMOVE_TEXTLABEL);
+    useWebview().emit(NotifyEvents.toWebview.REMOVE_TEXTLABEL);
 }
