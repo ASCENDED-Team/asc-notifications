@@ -122,7 +122,7 @@ const addDebugNotification = () => {
 };
 
 const init = () => {
-    events.on(NotifyEvents.CREATE_NOTIFICATION, (notification: VueNotification) => {
+    events.on(NotifyEvents.toWebview.CREATE_NOTIFICATION, (notification: VueNotification) => {
         if (notification.oggFile) {
             audio.play(`/sounds/${notification.oggFile}.ogg`);
         }

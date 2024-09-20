@@ -1,11 +1,19 @@
 import * as alt from 'alt-server';
 import { useWebview } from '@Server/player/webview.js';
 import { NotifyEvents } from '../../shared/events.js';
-import { Label, Notification, NotificationTypes } from '../../shared/interface.js';
+import { AllPlayerLabels, Label, Notification, NotificationTypes } from '../../shared/interface.js';
 import { useRebar } from '@Server/index.js';
 import { ASCNotifications } from '../../shared/config.js';
 
 const Rebar = useRebar();
+
+const allPlayerLabels: { [key: number]: AllPlayerLabels } = {};
+
+class InternalFunctions {
+    static update(playerLabels: AllPlayerLabels) {
+        allPlayerLabels[playerLabels.playerId] = playerLabels;
+    }
+}
 
 /**
  * Sends a notification to the player.
@@ -26,7 +34,7 @@ export function sendNotification(player: alt.Player, notification: Notification)
         Rebar.player.useAudio(player).playSound(`/sounds/${notificationToSend.oggFile}.ogg`);
     }
 
-    view.emit(NotifyEvents.CREATE_NOTIFICATION, notificationToSend);
+    view.emit(NotifyEvents.toWebview.CREATE_NOTIFICATION, notificationToSend);
 }
 
 /**
@@ -74,11 +82,26 @@ export function createTextlabel(player: alt.Player, label: Label) {
     if (labelToSend.oggFile && ASCNotifications.labelSound) {
         Rebar.player.useAudio(player).playSound(`/sounds/${labelToSend.oggFile}.ogg`);
     }
-
-    view.emit(NotifyEvents.CREATE_LABEL, labelToSend);
+    const labelToUpdate: AllPlayerLabels = {
+        playerId: player.id,
+        ...label,
+    };
+    allPlayerLabels[player.id] = labelToUpdate;
+    InternalFunctions.update(allPlayerLabels[player.id]);
+    view.emit(NotifyEvents.toWebview.CREATE_LABEL, labelToSend);
 }
 
 export function removeTextlabel(player: alt.Player) {
     const view = useWebview(player);
-    view.emit(NotifyEvents.REMOVE_TEXTLABEL);
+    delete allPlayerLabels[player.id];
+    view.emit(NotifyEvents.toWebview.REMOVE_TEXTLABEL);
 }
+
+function handleCallback(player: alt.Player) {
+    if (!player || !allPlayerLabels[player.id]) return;
+    if (allPlayerLabels[player.id]) {
+        createTextlabel(player, allPlayerLabels[player.id]);
+    }
+}
+
+alt.onClient(NotifyEvents.toServer.SEND_LABEL_DATA_TO_SERVER, handleCallback);

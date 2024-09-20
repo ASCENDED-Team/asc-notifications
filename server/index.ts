@@ -8,7 +8,8 @@ import { useTranslate } from '@Shared/translate.js';
 
 import './src/api.js';
 import '../shared/translations.js';
-import { NotificationTypes } from '../shared/interface.js';
+import { Label, NotificationTypes } from '../shared/interface.js';
+import { NotifyEvents } from '../shared/events.js';
 
 const { t } = useTranslate('de');
 const api = useApi();
@@ -60,3 +61,7 @@ async function init() {
 if (ASCNotifications.enableRebarSelector) {
     init();
 }
+
+function handleCallback(player: alt.Player, label: Label) {}
+
+alt.onClient(NotifyEvents.toServer.SEND_LABEL_DATA_TO_SERVER, handleCallback);

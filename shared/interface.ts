@@ -26,9 +26,13 @@ export interface ASCNotification {
 }
 
 export interface Label {
-    key: string;
+    keyToPress: string;
     label: string;
     oggFile?: string;
+}
+
+export interface AllPlayerLabels extends Label {
+    playerId: number;
 }
 
 export type LabelPositionsT = {
