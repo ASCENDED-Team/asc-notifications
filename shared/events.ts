@@ -4,6 +4,7 @@ export const NotifyEvents = {
     },
     toWebview: {
         CREATE_NOTIFICATION: 'notify:create:notification',
+        CREATE_REBAR_NOTIFICATION: 'notify:create:rebar:notification',
         CREATE_LABEL: 'notify:create:label',
         REMOVE_TEXTLABEL: 'notify:remove:label',
     },

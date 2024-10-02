@@ -14,6 +14,20 @@ export interface Notification {
     oggFile?: string;
 }
 
+export type RebarNotificationTypes = {
+    INFO: string;
+    ERROR: string;
+    SUCCESS: string;
+    WARNING: string;
+};
+
+export interface RebarNotification {
+    type: keyof RebarNotificationTypes;
+    message: string;
+    duration?: number;
+    oggFile?: string;
+}
+
 export interface ASCNotification {
     debug: boolean;
     sounds: boolean;
