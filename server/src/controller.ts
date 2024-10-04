@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { useWebview } from '@Server/player/webview.js';
 import { NotifyEvents } from '../../shared/events.js';
-import { AllPlayerLabels, Label, Notification, NotificationTypes } from '../../shared/interface.js';
+import { AllPlayerLabels, Label, Notification, NotificationTypes, RebarNotification } from '../../shared/interface.js';
 import { useRebar } from '@Server/index.js';
 import { ASCNotifications } from '../../shared/config.js';
 
@@ -37,6 +37,22 @@ export function sendNotification(player: alt.Player, notification: Notification)
     view.emit(NotifyEvents.toWebview.CREATE_NOTIFICATION, notificationToSend);
 }
 
+export function sendRebarNotification(player: alt.Player, notification: RebarNotification) {
+    const view = useWebview(player);
+
+    const notificationToSend: RebarNotification = {
+        duration: ASCNotifications.duration,
+        oggFile: 'mixkit',
+        ...notification,
+    };
+
+    if (notificationToSend.oggFile && ASCNotifications.sounds) {
+        Rebar.player.useAudio(player).playSound(`/sounds/${notificationToSend.oggFile}.ogg`);
+    }
+
+    view.emit(NotifyEvents.toWebview.CREATE_REBAR_NOTIFICATION, notificationToSend);
+}
+
 /**
  * Sends a notification to all online players.
  * @param notification The notification object containing icon, title, message, etc.
@@ -47,6 +63,11 @@ export function sendNotificationToAll(notification: Notification) {
     });
 }
 
+export function sendRebarNotificationToAll(notification: RebarNotification) {
+    alt.Player.all.forEach((player) => {
+        sendRebarNotification(player, notification);
+    });
+}
 /**
  * Sends a debug notification to the player if debug mode is enabled.
  * @param player The player to send the notification to.

@@ -1,6 +1,6 @@
 import { useWebview } from '@Client/webview/index.js';
 import { NotifyEvents } from '../../shared/events.js';
-import { Label, Notification } from '../../shared/interface.js';
+import { Label, Notification, RebarNotification } from '../../shared/interface.js';
 
 export function addNotification(notification: Notification) {
     if (!notification.duration) {
@@ -8,6 +8,14 @@ export function addNotification(notification: Notification) {
     }
 
     useWebview().emit(NotifyEvents.toWebview.CREATE_NOTIFICATION, notification);
+}
+
+export function addRebarNotification(notification: RebarNotification) {
+    if (!notification.duration) {
+        notification.duration = 5000;
+    }
+
+    useWebview().emit(NotifyEvents.toWebview.CREATE_REBAR_NOTIFICATION, notification);
 }
 
 export function createTextlabel(label: Label) {

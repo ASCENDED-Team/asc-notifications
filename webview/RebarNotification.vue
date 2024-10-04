@@ -2,7 +2,7 @@
     <div :class="notificationPositionClass">
         <transition-group :name="transitionNotificationName" tag="div">
             <div v-for="(notification, index) in reversedNotifications" :key="notification.id">
-                <NotificationComponent :notification-prop="notification" :secondsAgo="notification.elapsedSeconds" />
+                <RebarNotify :type="notification.type" :message="notification.message" />
             </div>
         </transition-group>
     </div>
@@ -10,24 +10,22 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { Notification } from '../shared/interface.js';
+import { RebarNotification } from '../shared/interface.js';
 import { NotifyEvents } from '../shared/events.js';
-import { useEvents } from '../../../../webview/composables/useEvents';
-import NotificationComponent from './components/NotificationComponent.vue';
-import { useAudio } from '../../../../webview/composables/useAudio';
+import { useEvents } from '../../../../webview/composables/useEvents.js';
+import { useAudio } from '../../../../webview/composables/useAudio.js';
 import { ASCNotifications } from '../shared/config.js';
+import RebarNotify from './components/RebarNotify.vue';
 
 const audio = useAudio();
 const events = useEvents();
+type RebarNotifyProps = Pick<RebarNotification, 'type' | 'message'>;
 
-defineProps({
-    notificationProp: Object,
-    secondsAgo: Number,
-});
+defineProps<RebarNotifyProps>();
 
-let debugMode = false; // Set to true for debugging
+let debugMode = true; // Set to true for debugging
 
-interface VueNotification extends Notification {
+interface VueNotification extends RebarNotification {
     id?: number;
     progress?: number;
     startTime?: number;
@@ -109,19 +107,34 @@ const updateProgress = () => {
 const addDebugNotification = () => {
     if (debugMode) {
         const debugNotification: VueNotification = {
-            title: 'Debug Notification',
-            icon: '🤣',
-            message:
-                'This is a very long test debug notification to redesign the notification system! This is a very long test debug notification to redesign the notification system!',
-            duration: 60000 * 60, // 1 hour in milliseconds
+            type: 'SUCCESS',
+            message: 'You have sent 420€ to Tommy!',
+            duration: 60000, // 1 hour in milliseconds
         };
-
+        const debugNotification2: VueNotification = {
+            type: 'WARNING',
+            message: 'You have sent 420€ to Tommy!',
+            duration: 60000, // 1 hour in milliseconds
+        };
+        const debugNotification3: VueNotification = {
+            type: 'ERROR',
+            message: 'You have sent 420€ to Tommy!',
+            duration: 60000, // 1 hour in milliseconds
+        };
+        const debugNotification4: VueNotification = {
+            type: 'INFO',
+            message: 'You have sent 420€ to Tommy!',
+            duration: 60000, // 1 hour in milliseconds
+        };
         addNotification(debugNotification);
+        addNotification(debugNotification2);
+        addNotification(debugNotification3);
+        addNotification(debugNotification4);
     }
 };
 
 const init = () => {
-    events.on(NotifyEvents.toWebview.CREATE_NOTIFICATION, (notification: VueNotification) => {
+    events.on(NotifyEvents.toWebview.CREATE_REBAR_NOTIFICATION, (notification: VueNotification) => {
         if (notification.oggFile) {
             audio.play(`/sounds/${notification.oggFile}.ogg`);
         }

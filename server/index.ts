@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 
 import { useApi } from '@Server/api/index.js';
 import { useRebar } from '@Server/index.js';
-import { sendNotification } from './src/controller.js';
+import { sendNotification, sendRebarNotification } from './src/controller.js';
 import { ASCNotifications } from '../shared/config.js';
 import { useTranslate } from '@Shared/translate.js';
 
@@ -42,13 +42,17 @@ const handleCharacterCreated = (player: alt.Player) => {
 };
 
 const handleCharacterCreateSkip = (player: alt.Player) => {
-    sendCharacterNotification(
-        player,
-        NotificationTypes.INFO,
-        'notification.character.welcomeback.title',
-        'notification.character.welcomeback.subtitle',
-        'notification.character.welcomeback.message',
-    );
+    // sendCharacterNotification(
+    //     player,
+    //     NotificationTypes.INFO,
+    //     'notification.character.welcomeback.title',
+    //     'notification.character.welcomeback.subtitle',
+    //     'notification.character.welcomeback.message',
+    // );
+    sendRebarNotification(player, {
+        type: 'SUCCESS',
+        message: t('notification.character.created.title'),
+    });
 };
 
 async function init() {
@@ -61,7 +65,3 @@ async function init() {
 if (ASCNotifications.enableRebarSelector) {
     init();
 }
-
-function handleCallback(player: alt.Player, label: Label) {}
-
-alt.onClient(NotifyEvents.toServer.SEND_LABEL_DATA_TO_SERVER, handleCallback);
