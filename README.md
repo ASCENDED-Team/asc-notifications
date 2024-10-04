@@ -1,127 +1,98 @@
-# Ascended Notification Plugin
+# Ascended Notification System
 
-![Notification_Kopie](https://github.com/Booster1212/rebar-notifications/assets/82890183/6e9aaa18-903f-4c27-bee1-50109a4809b1)
+Welcome to the Ascended Notification System! This plugin provides a powerful and flexible notification system for your alt:V server, enhancing user experience with customizable notifications and text labels.
 
-Ascended Notification Plugin is a plugin for the Rebar Framework that allows you to display custom notifications in your application with a queue.
+## API Flow
+
+Below is a flowchart representing the structure and flow of the `api.ts` file:
+
+```mermaid
+graph TD
+    A[Start] --> B[useNotificationAPI]
+    B --> C[general]
+    B --> D[textLabel]
+    C --> E[send]
+    C --> F[sendAll]
+    C --> G[getTypes]
+    D --> H[create]
+    D --> I[remove]
+    J[useApi] --> K[register]
+    K --> L[ascended-notification-api]
+    L --> B
+```
+
+## Features
+
+-   **Customizable Notifications**: Create and send notifications with various types (INFO, ERROR, SUCCESS, WARNING).
+-   **Text Labels**: Display dynamic text labels for players.
+-   **Localization Support**: Easy integration with translation systems.
+-   **Dark Mode**: Built-in support for dark mode UI.
+-   **Sound Effects**: Optional sound effects for notifications and labels.
+-   **Flexible Positioning**: Configure the position of notifications and text labels on the screen.
+-   **Debug Mode**: Built-in debugging features for easier development.
+-   **Server-side API**: Easy-to-use API for sending notifications from your server-side code.
+
+## Installation
+
+1. Clone this repository into your alt:V server's `/src/plugins` directory:
+
+```bash
+cd /path/to/your/altv/server/src/plugins
+git clone https://github.com/yourusername/ascended-notification-system.git
+```
+
+2. That's it! The plugin will automatically start when your server runs.
 
 ## Usage
 
-### Adding a Notification
-
----
-
-You can add a notification using the Rebar Plugin API. Here's an example:
+### Sending a Notification
 
 ```typescript
 import * as alt from 'alt-server';
-import { useRebar } from '@Server/index.js';
-import { NotificationTypes } from 'your-plugin-path/shared/interface.js'; // Adjust path
+import { useApi } from '@Server/api/index.js';
 
-const Rebar = useRebar();
-const NotificationAPI = await Rebar.useApi().getAsync('ascended-notification-api');
+const api = useApi();
+const notificationApi = api.get('ascended-notification-api');
 
-// Send notification to a specific player
-NotificationAPI.general.send(player, {
-    icon: NotificationTypes.SUCCESS, // Use enum for icon types
-    title: 'Success',
-    subtitle: 'Spawned vehicle',
-    message: `Successfully spawned Fulltuned Vehicle [Model: ${model}] at your current position.`,
-    duration: 15000,
-});
-
-// Send notification to all players
-NotificationAPI.general.sendAll({
-    icon: NotificationTypes.INFO,
-    title: 'Server Announcement',
-    message: 'A new update is coming soon!',
+notificationApi.general.send(player, {
+    icon: notificationApi.general.getTypes().SUCCESS,
+    title: 'Welcome!',
+    subtitle: 'Greetings',
+    message: 'Welcome to our server!',
+    duration: 5000, // Optional: Duration in milliseconds
+    oggFile: 'notification', // Optional: Sound effect file name
 });
 ```
 
----
-
-### Adding a TextLabel
-
----
-
-You can add a textlabel using the Rebar Plugin API. Here's an example:
+### Creating a Text Label
 
 ```typescript
-import * as alt from 'alt-server';
-import { useRebar } from '@Server/index.js';
-import { NotificationTypes } from 'your-plugin-path/shared/interface.js'; // Adjust path
-
-const Rebar = useRebar();
-const NotificationAPI = await Rebar.useApi().getAsync('ascended-notification-api');
-
-// Send textlabel to a specific player
-const interaction = Rebar.controllers.useInteraction(
-    new alt.ColshapeCylinder(position.x, position.y, position.z, 2, 10),
-    'player',
-);
-interaction.onEnter((player) => {
-    NotificationAPI.textLabel.create(player, { key: 'E', label: t('openatm') });
-});
-interaction.onLeave((player) => {
-    NotificationAPI.textLabel.remove(player);
+notificationApi.textLabel.create(player, {
+    keyToPress: 'E',
+    label: 'Press E to interact',
+    oggFile: 'notification', // Optional: Sound effect file name
 });
 ```
 
----
-
-### Setting the position of the Notification
-
-You can modify the position in the shared/config.ts file:
+### Removing a Text Label
 
 ```typescript
-export const ASCNotifications = {
-    // ... other config options
+notificationApi.textLabel.remove(player);
+```
+
+## Configuration
+
+You can customize the notification system behavior by modifying the `config.ts` file:
+
+```typescript
+export const ASCNotifications: ASCNotification = {
+    debug: false,
+    sounds: true,
+    labelSound: true,
+    enableRebarSelector: false,
+    duration: 10000,
+    darkMode: true,
     position: 'top-left',
     textlabelPosition: 'right-center',
 };
 ```
-
-### Notification Object Properties
-
--   **icon**: The icon to display in the notification (use NotificationTypes enum).
--   **title**: The title of the notification.
--   **subtitle**: (Optional) The subtitle of the notification.
--   **message**: The notification message.
-    duration**: (Optional) The duration in milliseconds for how long the notification should be displayed (defaults to value in config).
-    oggFile**: (Optional) Sound (ogg) of the notification from the /sounds folder (defaults to 'notification').
-
-### TextLabel Object Properties
-
--   **label**: The message to be displayed
--   **key**: The key used for the intraction.
-
-### License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-### Getting Started
-
-To get started with the Ascended Notification Plugin, you can clone it from the source code.
-
-# Clone the repository:
-
-```bash
-git clone https://github.com/ASCENDED-Team/asc-notifications
-```
-
----
-
-### Acknowledgments
-
-This project was inspired by the need for a simple and customizable notification system in Rebar applications.
-
----
-
-**Authors**:
-
--   Booster1212
-
----
-
-**Support**:
-
--   For support, bug reports, or feature requests, please create an issue here on GitHub.
