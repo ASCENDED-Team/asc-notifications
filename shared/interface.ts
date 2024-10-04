@@ -23,6 +23,7 @@ export interface ASCNotification {
     darkMode: boolean;
     position: keyof LabelPositionsT;
     textlabelPosition: keyof LabelPositionsT;
+    checkForUpdates: boolean;
 }
 
 export interface Label {
