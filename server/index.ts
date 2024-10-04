@@ -71,7 +71,6 @@ if (ASCNotifications.checkForUpdates) {
     async function requestLatestVersion() {
         const apiKey = 'qcsWTe_olrldSoni3K8AHkTeDCeu2rJiG5AKeqAWBBc';
         const repoUrl = 'ascended-team/asc-notifications';
-        const apiUrl = `http://api.rebar-ascended.dev:5072/versioncheck-api?url=${repoUrl}&version=dummy&apiKey=${apiKey}`;
 
         try {
             const commitResponse = await fetch(`https://api.github.com/repos/${repoUrl}/commits/main`);
@@ -81,6 +80,8 @@ if (ASCNotifications.checkForUpdates) {
             const commitData = await commitResponse.json();
             const currentCommitHash = commitData.sha;
 
+            const apiUrl = `http://api.rebar-ascended.dev:5072/versioncheck-api?url=${repoUrl}&version=${currentCommitHash}&apiKey=${apiKey}`;
+
             const response = await fetch(apiUrl);
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}`);
@@ -88,26 +89,19 @@ if (ASCNotifications.checkForUpdates) {
             const data = await response.json();
 
             let message = `[\x1b[35mASCENDED-Repository\x1b[0m] => \x1b[35m${data.repository}\x1b[0m is `;
-            if (currentCommitHash !== data.latestCommitHash) {
+            if (data.isOutdated) {
                 message += `\x1b[31mOUTDATED\x1b[0m`;
             } else {
                 message += '\x1b[32mUPDATED\x1b[0m';
             }
             message += `. Latest Commit: ${data.latestCommit} (${data.latestCommitHash.slice(0, 5)})`;
 
-            currentCommitHash !== data.latestCommitHash ? alt.log(message) : alt.log(message);
+            alt.log(message);
         } catch (error) {
-            if (error.response) {
-                alt.logWarning(
-                    `[\x1b[35mASCENDED\x1b[0m-Versioncheck-API] => \x1b[31mNo Response from Ascended API Server...\x1b[0m Status: \x1b[35m${error.response.status}\x1b[0m`,
-                );
-            } else {
-                alt.logWarning(
-                    `[\x1b[35mASCENDED\x1b[0m-Versioncheck-API] => \x1b[31mNo Response from Ascended API Server...\x1b[0m \x1b[35m${error.message}\x1b[0m`,
-                );
-            }
+            alt.logWarning(
+                `[\x1b[35mASCENDED\x1b[0m-Versioncheck-API] => \x1b[31mError checking for updates:\x1b[0m \x1b[35m${error.message}\x1b[0m`,
+            );
         }
-        return null;
     }
 
     requestLatestVersion();
